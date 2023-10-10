@@ -13,7 +13,7 @@ public class Student implements StudentRepository {
     private static AtomicInteger ID_GENERATOR = new AtomicInteger(0);
     private static int id;
     private String name;
-    private List<Group> groups = Arrays.asList(new Group[Types.Course.values().length]);
+    private List<Group> groups = Arrays.asList();
 
     public Student(String name) {
         this.id = ID_GENERATOR.incrementAndGet();
