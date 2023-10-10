@@ -16,13 +16,13 @@ public class Group implements GroupRepository {
 
     private List<Student> students;
 
-    private Types.Course course;
+    private Course course;
 
-    public Group(Types.Course course) {
+    public Group(Course course) {
         this.course = course;
     }
 
-    public Group(Types.Course course, List<Student> students) {
+    public Group(Course course, List<Student> students) {
         this.course = course;
         this.students = students;
     }

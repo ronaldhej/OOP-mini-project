@@ -38,6 +38,15 @@ public class Student implements StudentRepository {
         }
     }
 
+    public Types.Result<Student, Exception> getByName(String name) {
+        try {
+            Student student = students.stream().filter(s -> s.name == name).findFirst().get();
+            return new Types.Result<>(student, null);
+        } catch (Exception e) {
+            return new Types.Result<>(null, e);
+        }
+    }
+
     public Types.Result<List<Student>, Exception> readAll() {
         if (students.size() == 0) {
             return new Types.Result<>(null, new Exception("No students"));

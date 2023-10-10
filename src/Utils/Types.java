@@ -14,12 +14,4 @@ public class Types {
         public V getSecond() { return second; }
     }
 
-    public enum Course {
-        OOP,
-        DEB,
-        SU,
-        BEEP,
-        BOP
-    }
-
 }

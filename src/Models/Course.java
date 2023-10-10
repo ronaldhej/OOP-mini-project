@@ -40,6 +40,15 @@ public class Course implements CourseRepository {
         }
     }
 
+    public Types.Result<Course, Exception> getByName(String name) {
+        try {
+            Course course = courses.stream().filter(c -> c.name == name).findFirst().get();
+            return new Types.Result<>(course, null);
+        } catch (Exception e) {
+            return new Types.Result<>(null, e);
+        }
+    }
+
     public Types.Result<List<Course>, Exception> readAll() {
         if (courses.size() == 0) {
             return new Types.Result<>(null, new Exception("No courses"));

@@ -4,6 +4,9 @@ import Models.*;
 import Utils.Types;
 import View.BookingSystemView;
 
+import java.beans.PropertyEditorSupport;
+import java.util.List;
+
 public class BookingSystemController {
     private CourseRepository courseRepository;
     private GroupRepository groupRepository;
@@ -33,9 +36,9 @@ public class BookingSystemController {
             view.printToView("(0) Exit program");
 
             switch (view.getUserInput("Enter Option: ")) {
+                //Rooms
                 case "1" -> {
-                    String input = view.getUserInput("Would you like to: (1) Create, (2) Update, (3) Delete or (4) View?");
-                    switch (input) {
+                    switch (view.getUserInput("Would you like to: (1) Create, (2) Update, (3) Delete, (4) View or (0) Return to previous prompt?")) {
                         case "1" -> {
 
                         }
@@ -55,18 +58,73 @@ public class BookingSystemController {
                     }
 
                 }
+                //Courses
                 case "2" -> {
-                    view.printToView("Would you like to: (1) Create, (2) Update, (3) Delete or (4) View?");
+                    switch (view.getUserInput("Would you like to: (1) Create, (2) Update, (3) Delete, (4) View or (0) Return to previous prompt?")) {
+                        case "1" -> {
+
+                        }
+                        case "2" -> {
+
+                        }
+                        case "3" -> {
+
+                        }
+                        case "4" -> {
+
+                        }
+                        default -> {
+                            view.printToView("Invalid option");
+                        }
+
+                    }
 
                 }
+                //Student Groups
                 case "3" -> {
-                    view.printToView("Would you like to: (1) Create, (2) Update, (3) Delete or (4) View?");
+                    switch (view.getUserInput("Would you like to: (1) Create, (2) Update, (3) Delete, (4) View or (0) Return to previous prompt?")) {
+                        case "1" -> {
+
+                        }
+                        case "2" -> {
+
+                        }
+                        case "3" -> {
+
+                        }
+                        case "4" -> {
+
+                        }
+                        default -> {
+                            view.printToView("Invalid option");
+                        }
+
+                    }
 
                 }
+                //Reservations
                 case "4" -> {
-                    view.printToView("Would you like to: (1) Create, (2) Update, (3) Delete or (4) View?");
+                    switch (view.getUserInput("Would you like to: (1) Create, (2) Update, (3) Delete, (4) View or (0) Return to previous prompt?")) {
+                        case "1" -> {
+
+                        }
+                        case "2" -> {
+
+                        }
+                        case "3" -> {
+
+                        }
+                        case "4" -> {
+
+                        }
+                        default -> {
+                            view.printToView("Invalid option");
+                        }
+
+                    }
 
                 }
+                //Exit
                 case "0" -> {
                     return;
                 }
@@ -74,14 +132,15 @@ public class BookingSystemController {
                     view.printToView("Invalid option");
                 }
             }
-        } while(true);
+        } while (true);
 
 
     }
 
     public Types.Result<Room, Exception> createRoom() {
-        String roomNum = view.getUserInput("Enter room number:");
-        Room room = new Room(roomNum){};
+        String roomNum = view.getUserInput("Enter room number: ");
+        Room room = new Room(roomNum) {
+        };
         Types.Result result = roomRepository.create(room);
 
         if (result.getFirst() == null) {
@@ -91,12 +150,45 @@ public class BookingSystemController {
         }
     }
 
-    public Types.Course createCourse(String courseName) {
-        switch (courseName) {
-            case "OOP" -> {
+    public Types.Result<Course, Exception> createCourse() {
+        String courseName = view.getUserInput("Enter course name: ");
+        Course course = new Course(courseName);
+        Types.Result result = courseRepository.create(course);
 
-            }
+        if (result.getFirst() == null) {
+            return new Types.Result<>(null, (Exception) result.getSecond());
+        } else {
+            return new Types.Result<>(course, null);
         }
+    }
+
+    public Types.Result<Student, Exception> createStudent() {
+        String studentName = view.getUserInput("Enter student's name: ");
+        Student student = new Student(studentName);
+        Types.Result result = studentRepository.create(student);
+
+        if (result.getFirst() == null) {
+            return new Types.Result<>(null, (Exception) result.getSecond());
+        } else {
+            return new Types.Result<>(student, null);
+        }
+    }
+
+    public Types.Result<Group, Exception> createGroup(List<Student> students) {
+        Types.Result result = courseRepository.getByName(view.getUserInput("Course for the group: "));
+        if (result.getFirst() != null) {
+            Group group = new Group((Course) result.getFirst(), students);
+            return new Types.Result<>(group, null);
+        } else {
+            return new Types.Result<>(null, (Exception) result.getSecond());
+        }
+    }
+
+    public Types.Result<List<Group>, Exception> getGroups() {
+
+    }
+
+    public Types.Result<Group, Exception> assignStudentsToGroup() {
 
     }
 }
